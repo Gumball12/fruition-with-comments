@@ -80,8 +80,7 @@ const copyWorkerScript = () => {
     return;
   }
 
-  console.log(workerScript.value);
-  // navigator.clipboard.writeText(workerScript.value);
+  navigator.clipboard.writeText(workerScript.value);
 };
 
 const handleChange = ({ currentTarget }: Event) =>
