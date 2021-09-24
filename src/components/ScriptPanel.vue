@@ -1,5 +1,14 @@
 <template>
-  <div class="duration-150 relative transform hover:-translate-y-2px">
+  <div
+    class="
+      duration-150
+      max-w-screen-lg
+      relative
+      transform
+      w-full
+      hover:-translate-y-2px
+    "
+  >
     <textarea
       class="
         border border-gray-200

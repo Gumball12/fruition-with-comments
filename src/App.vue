@@ -14,7 +14,7 @@
     "
   >
     <HeaderPanel />
-    <section class="flex flex-col gap-8 px-12">
+    <section class="flex flex-col gap-8 items-center px-12">
       <ScriptPanel v-model="giscusScript" :placeholder="inputPlaceholder" />
       <ScriptPanel
         :userDatas="userDatas"
