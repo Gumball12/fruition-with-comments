@@ -113,7 +113,7 @@ const genScriptElement = () => {
   return el;
 };
 
-new MutationObserver(mutations => {
+const appendGiscusElement = mutations => {
   const appendTargetLastChildren = mutations
     .filter(({ target }) => target.classList.contains('notion-scroller'))
     .flatMap(({ addedNodes }) => [...addedNodes])
@@ -132,6 +132,39 @@ new MutationObserver(mutations => {
 
   appendTarget.dataset.comments = true;
   appendTarget.insertBefore(genScriptElement(), appendTargetLastChild);
+};
+
+const fixGiscusIFrameURL = mutations => {
+  const giscusElements = mutations
+    .filter(({ target }) => target.classList.contains('notion-scroller'))
+    .flatMap(({ addedNodes }) => [...addedNodes])
+    .filter(node => node.classList.contains('giscus'));
+
+  if (giscusElements.length === 0) {
+    return;
+  }
+
+  const [giscusElement] = giscusElements;
+  const giscusIFrameElement = giscusElement.firstChild;
+  const matchedTerm = giscusIFrameElement?.getAttribute('src').match(/term=(.*)/);
+
+  if (!matchedTerm || !matchedTerm[1]) {
+    return;
+  }
+
+  const termURL = decodeURIComponent(matchedTerm[1]);
+  const newTermURL = termURL.replace(/\\?giscus=.*/, '');
+  const newSrc = giscusIFrameElement
+    .getAttribute('src')
+    .replace(/term=.*/, 'term=' + encodeURIComponent(newTermURL));
+
+  giscusIFrameElement.setAttribute('src', newSrc);
+  window.history.replaceState(window.history.state, 'bypass', window.location.pathname);
+};
+
+new MutationObserver(mutations => {
+  appendGiscusElement(mutations);
+  fixGiscusIFrameURL(mutations);
 }).observe(document.querySelector('div#notion-app'), {
   subtree: true,
   childList: true,
