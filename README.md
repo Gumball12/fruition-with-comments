@@ -1,5 +1,7 @@
 # fruition-with-comments
 
+![screenshot](./docs/screenshot.png)
+
 Add a Comments System using 'Giscus' to a site built with 'Fruition'.
 
 - [Fruition](https://fruitionsite.com/) : Free, Open Source Toolkit for Building Websites with Notion.
