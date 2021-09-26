@@ -113,17 +113,17 @@ const genScriptElement = () => {
   return el;
 };
 
-new MutationObserver(([mutation], observer) => {
-  if (mutation.addedNodes.length === 0) {
+new MutationObserver(mutations => {
+  const appendTargetLastChildren = mutations
+    .filter(({ target }) => target.classList.contains('notion-scroller'))
+    .flatMap(({ addedNodes }) => [...addedNodes])
+    .filter(node => node.classList.contains('notion-presence-container'));
+
+  if (appendTargetLastChildren.length === 0) {
     return;
   }
 
-  const appendTargetLastChild = document.querySelector('div.notion-presence-container');
-
-  if (!appendTargetLastChild) {
-    return;
-  }
-
+  const [appendTargetLastChild] = appendTargetLastChildren;
   const appendTarget = appendTargetLastChild.parentElement;
 
   if (appendTarget.dataset.comments) {
