@@ -176,6 +176,7 @@ new MutationObserver(mutations => {
     padding-bottom: 5vh !important;
   }
   .giscus {
+    align-self: center;
     width: 900px;
     max-width: 100%;
     padding-left: calc(96px + env(safe-area-inset-left));
